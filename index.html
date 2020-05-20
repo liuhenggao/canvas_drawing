@@ -4,11 +4,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>恒高的画板</title>
+    <title>Me的画板</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="//at.alicdn.com/t/font_1832006_899weotcyrb.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+    </style>
 </head>
 
 <body>
-    <h5>Hi</h5>
+    <div id="container">
+        <canvas id=canvas></canvas>
+    </div>
+    <div class="tool">
+        <div class="iconfont">
+            <svg class="icon active" id="pencil" aria-hidden="true">
+                <use xlink:href="#icon-pencil"></use>
+            </svg>
+        </div>
+        <div class="iconfont">
+            <svg class="icon" id="eraser" aria-hidden="true">
+                <use xlink:href="#icon-eraser"></use>
+            </svg>
+        </div>
+
+        <div class="iconfont">
+            <svg class="icon" id="back" aria-hidden="true">
+                <use xlink:href="#icon-back"></use>
+            </svg>
+        </div>
+        <div class="iconfont">
+            <svg class="icon" id="clear" aria-hidden="true">
+                <use xlink:href="#icon-clear"></use>
+            </svg>
+        </div>
+        <div class="iconfont">
+            <svg class="icon" id="load" aria-hidden="true">
+                <use xlink:href="#icon-load"></use>
+            </svg>
+        </div>
+    </div>
+    <div class="color" id="color">
+        <!-- <div class="color_item"></div>
+        <div class="color_item"></div>
+        <div class="color_item"></div>
+        <div class="color_item"></div>
+        <div class="color_item"></div>
+        <div class="color_item"></div>
+        <div class="color_item"></div>
+        <div class="color_item"></div> -->
+    </div>
 </body>
+<script src="./mouse.js"></script>
 
 </html>

@@ -1,0 +1,57 @@
+#canvas {
+    background-color: #fcfcfc;
+    position: fixed;
+    top: 20px;
+    left: 60px;
+    border-radius: 8px;
+}
+#container{
+    background-color: #cecece;
+}
+.icon {
+    display: inline-block;
+    width: 32px; 
+    height: 32px;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
+ }
+ .icon:hover{
+    transform: scale(1.2);
+ }
+ .active{
+     border: 1px solid #999;
+     box-shadow: 0 0 12px #666;
+     border-radius: 4px;
+     transform: scale(1.2);
+     transition: .3s linear;
+ }
+
+ .iconfont{
+     text-align: center;
+     cursor: pointer;
+     margin-top: 30px;
+ }
+.tool{
+    position: absolute;
+    width: 60px;
+    top: 0;
+    left: 0;
+}
+.color{
+    position: absolute;
+    top: 30px;
+    right: 0;
+    width: 60px;
+}
+.color_item{
+    width: 18px;
+    height: 18px;
+    margin: 8px auto;
+    padding: 1px;
+    border: .5px solid #777;
+    cursor: pointer;
+}
+.color_item:hover{
+    transform: scale(1.1);
+}
