@@ -1,5 +1,6 @@
 let _moving = false
 let _wash = false
+let _fillall = false
 /** 获取浏览器视口的宽高 */
 let _width = document.documentElement.clientWidth
 let _height = document.documentElement.clientHeight
@@ -16,15 +17,27 @@ _contain.style.height = '100vh'
 
 let _pencil = document.getElementById('pencil')
 let _eraser = document.getElementById('eraser')
+let _fill = document.getElementById('fill')
 _pencil.onclick = function (e) {
-    _eraser.classList.remove('active')
     _pencil.classList.add('active')
+    _eraser.classList.remove('active')
+    _fill.classList.remove('active')
     _wash = false
+    _fillall = false
 }
 _eraser.onclick = function (e) {
     _eraser.classList.add('active')
     _pencil.classList.remove('active')
+    _fill.classList.remove('active')
     _wash = true
+    _fillall = false
+}
+_fill.onclick = function (e) {
+    _fill.classList.add('active')
+    _eraser.classList.remove('active')
+    _pencil.classList.remove('active')
+    _wash = false
+    _fillall = true
 }
 
 let _back = document.getElementById('back')
@@ -58,15 +71,20 @@ if (_canvas.getContext) {
     let _newPoint = [0, 0]
     let ctx = canvas.getContext('2d')
     _canvas.onmousedown = function (e) {
-        let pointX = e.layerX
-        let pointY = e.layerY
-        _point = [pointX, pointY]
-        ctx.fillStyle = paintColor
-        ctx.fillRect(pointX - 4, pointY - 4, 8, 8);
-        _moving = true
-        if (_wash) {
-            ctx.clearRect(pointX - 4, pointY - 4, 8, 8)
+        if (_fillall) {
+            _canvas.style.background = paintColor
+        } else {
+            let pointX = e.layerX
+            let pointY = e.layerY
+            _point = [pointX, pointY]
+            ctx.fillStyle = paintColor
+            ctx.fillRect(pointX - 4, pointY - 4, 8, 8);
+            _moving = true
+            if (_wash) {
+                ctx.clearRect(pointX - 4, pointY - 4, 8, 8)
+            }
         }
+
     }
     _canvas.onmouseleave = function (e) {
         _moving = false
@@ -75,6 +93,7 @@ if (_canvas.getContext) {
     _canvas.onmousemove = function (e) {
         let newPointX = e.layerX
         let newPointY = e.layerY
+        if (_fillall) { return }
         if (_moving) {
             if (_wash) {
                 ctx.clearRect(newPointX - 5, newPointY - 5, 10, 10)
