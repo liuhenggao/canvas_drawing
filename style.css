@@ -47,8 +47,7 @@
 .color_item{
     width: 18px;
     height: 18px;
-    margin: 8px auto;
-    padding: 1px;
+    margin: 10px auto;
     border: .5px solid #777;
     cursor: pointer;
 }

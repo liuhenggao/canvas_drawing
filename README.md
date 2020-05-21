@@ -38,4 +38,14 @@ ___
 * 初步开发时引入外部css，但是不起作用，最后发现是chrome浏览器的缓存导致css文件不更新，在调试器中关闭缓存即可。
 * 获取浏览器的视口的宽高的方法用 ``` document.documentElement.clientWidth ``` 和 ``` document.documentElement.clientHeight ```,然后赋值给canvas元素使其可以铺满屏幕。
 * 判断设备是否支持触屏事件，通过 ``` "ontouchstart" in document.body ``` 来判断
+* 保存画板内容为png格式的图片，通过``` _canvas.toDataURL ```获取地址，在浏览器生成一个a标签，把图片的地址赋给a标签。
+  ``` 
+        var url = _canvas.toDataURL("image/png")
+        var a = document.createElement('a')
+        document.body.appendChild(a)
+        a.href = url
+        a.download = '画板'
+        a.target = '_blank'
+        a.click()
+  ```
 ---

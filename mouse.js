@@ -45,7 +45,8 @@ let _clear = document.getElementById('clear')
 let _load = document.getElementById('load')
 
 
-let colorList = ["#000000", "#393D49", "#2F4056", "#75878a", "#d1d9e0", "#1E9FFF", "#41555d", "#725e82", "#eacd76", "#a78e44", "#FFB800", "#FF5722", "#009688", "#5FB878"]
+
+let colorList = ["#000000", "#393D49", "#2F4056", "#75878a", "#d1d9e0", "#ffffff", "#1E9FFF", "#41555d", "#725e82", "#eacd76", "#a78e44", "#FFB800", "#FF5722", "#009688", "#5FB878"]
 let _colorArray = document.getElementById('color')
 
 colorList.forEach((item) => {
@@ -57,14 +58,18 @@ colorList.forEach((item) => {
 
 let paintColor = '#000000'
 let _allColor = document.getElementsByClassName('color_item')
+_allColor[0].classList.add('active')
 for (var i = 0; i < _allColor.length; i++) {
     _allColor[i].index = i
     _allColor[i].onclick = function (e) {
         paintColor = colorList[e.target.index]
+        for (var j = 0; j < _allColor.length; j++) {
+            console.dir(_allColor[j])
+            _allColor[j].classList.remove('active')
+        }
+        e.target.classList.add('active')
     }
 }
-
-
 
 if (_canvas.getContext) {
     let _point = [0, 0]
@@ -72,7 +77,8 @@ if (_canvas.getContext) {
     let ctx = canvas.getContext('2d')
     _canvas.onmousedown = function (e) {
         if (_fillall) {
-            _canvas.style.background = paintColor
+            ctx.fillStyle = paintColor
+            ctx.fillRect(0, 0, _canvas.width, _canvas.height);
         } else {
             let pointX = e.layerX
             let pointY = e.layerY
@@ -111,9 +117,19 @@ if (_canvas.getContext) {
     }
 
     _clear.onclick = function (e) {
-        ctx.fillStyle = '#fcfcfc'
+        ctx.fillStyle = '#fefefe'
         ctx.fillRect(0, 0, _canvas.width, _canvas.height);
         console.log(e)
+    }
+
+    _load.onclick = function (e) {
+        var url = _canvas.toDataURL("image/png")
+        var a = document.createElement('a')
+        document.body.appendChild(a)
+        a.href = url
+        a.download = '画板'
+        a.target = '_blank'
+        a.click()
     }
 
     function drawLine(x1, y1, x2, y2) {
