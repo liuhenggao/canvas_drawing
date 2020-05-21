@@ -1,4 +1,5 @@
 let _moving = false
+let _wash = false
 /** 获取浏览器视口的宽高 */
 let _width = document.documentElement.clientWidth
 let _height = document.documentElement.clientHeight
@@ -18,10 +19,12 @@ let _eraser = document.getElementById('eraser')
 _pencil.onclick = function (e) {
     _eraser.classList.remove('active')
     _pencil.classList.add('active')
+    _wash = false
 }
 _eraser.onclick = function (e) {
     _eraser.classList.add('active')
     _pencil.classList.remove('active')
+    _wash = true
 }
 
 let _back = document.getElementById('back')
@@ -61,18 +64,26 @@ if (_canvas.getContext) {
         ctx.fillStyle = paintColor
         ctx.fillRect(pointX - 4, pointY - 4, 8, 8);
         _moving = true
+        if (_wash) {
+            ctx.clearRect(pointX - 4, pointY - 4, 8, 8)
+        }
     }
     _canvas.onmouseleave = function (e) {
         _moving = false
     }
 
     _canvas.onmousemove = function (e) {
+        let newPointX = e.layerX
+        let newPointY = e.layerY
         if (_moving) {
-            let newPointX = e.layerX
-            let newPointY = e.layerY
-            _newPoint = [newPointX, newPointY]
-            drawLine(_point[0], _point[1], _newPoint[0], _newPoint[1])
-            _point = _newPoint
+            if (_wash) {
+                ctx.clearRect(newPointX - 5, newPointY - 5, 10, 10)
+            } else {
+                _newPoint = [newPointX, newPointY]
+                drawLine(_point[0], _point[1], _newPoint[0], _newPoint[1])
+                _point = _newPoint
+            }
+
         }
     }
 
@@ -93,6 +104,11 @@ if (_canvas.getContext) {
         ctx.lineWidth = 8
         ctx.lineTo(x2, y2);
         ctx.strokeStyle = paintColor
+        if (_wash) {
+
+        } else {
+
+        }
         ctx.stroke();
         ctx.closePath()
     }
