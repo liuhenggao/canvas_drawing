@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>Me的画板</title>
     <link rel="stylesheet" type="text/css" href="style.css">
     <script src="//at.alicdn.com/t/font_1832006_o3bki5qhrhq.js"></script>
@@ -18,7 +18,7 @@
 
 <body>
     <div id="container">
-        <canvas id=canvas></canvas>
+        <canvas id=canvas disable-scroll="true"></canvas>
     </div>
     <div class="tool">
         <div class="iconfont">
@@ -53,6 +53,12 @@
         </div>
     </div>
     <div class="color" id="color">
+        <div class="range">
+            <div class="large" id="large"></div>
+            <div class="medium" id="medium"></div>
+            <div class="small" id="small"></div>
+            <div class="mini" id="mini"></div>
+        </div>
         <!-- <div class="color_item"></div>
         <div class="color_item"></div>
         <div class="color_item"></div>
