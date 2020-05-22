@@ -1,7 +1,7 @@
-let _moving = false
-let _wash = false
-let _fillall = false
-let _touch = false
+let _moving = false // 是否在移动
+let _wash = false // 是否使用橡皮
+let _fillall = false // 是否填充
+
 /** 获取浏览器视口的宽高 */
 let _width = document.documentElement.clientWidth
 let _height = document.documentElement.clientHeight
@@ -12,8 +12,8 @@ let isTouch = 'ontouchstart' in document.body ? true : false
 /** 通过getElementById选取canvas元素 */
 let _canvas = document.getElementById('canvas')
 
-let _degree = 8
-let _range = _degree / 2
+let _degree = 8 //画笔的粗细
+let _range = _degree / 2 // 需要偏移的像素
 
 _canvas.width = _width - 100
 _canvas.height = _height - 30
@@ -40,7 +40,7 @@ _eraser.onclick = function (e) {
     _wash = true
     _fillall = false
 }
-_fill.onclick = function (e) {
+_fill.onclick = function (e) { // 填充整个画板
     _fill.classList.add('active')
     _eraser.classList.remove('active')
     _pencil.classList.remove('active')
@@ -52,7 +52,7 @@ let _back = document.getElementById('back')
 let _clear = document.getElementById('clear')
 let _load = document.getElementById('load')
 
-
+/** 用一个数组来存储画笔的颜色 */
 let colorList = ["#000000", "#393D49", "#2F4056", "#75878a", "#d1d9e0", "#ffffff", "#1E9FFF", "#41555d", "#725e82", "#eacd76", "#a78e44", "#FFB800", "#FF5722", "#009688", "#5FB878"]
 let _colorArray = document.getElementById('color')
 
@@ -111,7 +111,7 @@ if (_canvas.getContext) {
             }
         }
     } else {
-        _canvas.onmousedown = function (e) {
+        _canvas.onmousedown = function (e) { // 鼠标点击
             if (_fillall) {
                 ctx.fillStyle = paintColor
                 ctx.fillRect(0, 0, _canvas.width, _canvas.height);
@@ -127,10 +127,10 @@ if (_canvas.getContext) {
                 }
             }
         }
-        _canvas.onmouseleave = function (e) {
+        _canvas.onmouseleave = function (e) { // 鼠标抬起
             _moving = false
         }
-        _canvas.onmousemove = function (e) {
+        _canvas.onmousemove = function (e) { // 鼠标移动
             let newPointX = e.layerX
             let newPointY = e.layerY
             if (_fillall) { return }
@@ -140,18 +140,18 @@ if (_canvas.getContext) {
                 _point = _newPoint
             }
         }
-        _canvas.onmouseup = function (e) {
+        _canvas.onmouseup = function (e) { // 当鼠标离开canvas标签的范围时把_moving置为false
             _moving = false
         }
     }
 
-    _clear.onclick = function (e) {
+    _clear.onclick = function (e) { // 清除画板上的所有内容，用一个新的白色背景覆盖画板
         ctx.fillStyle = '#fefefe'
         ctx.fillRect(0, 0, _canvas.width, _canvas.height);
         console.log(e)
     }
 
-    _load.onclick = function (e) {
+    _load.onclick = function (e) { // 下载画板内容为图片
         var url = _canvas.toDataURL("image/png")
         var a = document.createElement('a')
         document.body.appendChild(a)
@@ -161,7 +161,7 @@ if (_canvas.getContext) {
         a.click()
     }
 
-    function drawLine(x1, y1, x2, y2) {
+    function drawLine(x1, y1, x2, y2) { // canvas画线的方法
         ctx.beginPath();
         ctx.moveTo(x1, y1);
         ctx.lineWidth = _degree
@@ -176,6 +176,7 @@ if (_canvas.getContext) {
     }
 }
 
+/** 修改画笔粗细 */
 let _large = document.getElementById('large')
 let _medium = document.getElementById('medium')
 let _small = document.getElementById('small')
