@@ -6,7 +6,9 @@
 * 松开鼠标（onmouseup）
 ---
 ### 2. 手机触屏事件（touch事件）
-
+* touchstart
+* touchmove
+* touchend
 ---
 ### 3. canvas使用方法
 * 绘制矩形
@@ -23,16 +25,19 @@
         ctx.lineTo(100, 25);
         ctx.fill();
     ```
-* 画圆
-    ```
-
-    ```
 * 两点之间画线（绘制路径）
     ```
-        
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        ctx.lineWidth = _degree
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
+        ctx.closePath()
     ```
 ___
 ### 4. 手机上viewport显示问题
+*
+``` <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> ```
 ---
 ### 5. 遇到的问题
 * 初步开发时引入外部css，但是不起作用，最后发现是chrome浏览器的缓存导致css文件不更新，在调试器中关闭缓存即可。
