@@ -18,6 +18,8 @@ let _range = _degree / 2 // 需要偏移的像素
 _canvas.width = _width - 100
 _canvas.height = _height - 30
 
+let _storage = []
+
 let _contain = document.getElementById('container')
 _contain.style.width = '100vw'
 _contain.style.height = '100vh'
@@ -49,6 +51,7 @@ _fill.onclick = function (e) { // 填充整个画板
 }
 
 let _back = document.getElementById('back')
+let _next = document.getElementById('next')
 let _clear = document.getElementById('clear')
 let _load = document.getElementById('load')
 
@@ -81,6 +84,7 @@ for (var i = 0; i < _allColor.length; i++) {
 if (_canvas.getContext) {
     let _point = [0, 0]
     let _newPoint = [0, 0]
+    let _step = 1
     let ctx = canvas.getContext('2d')
     if (isTouch) {
         _canvas.ontouchstart = function (e) {
@@ -110,6 +114,18 @@ if (_canvas.getContext) {
                 _point = _newPoint
             }
         }
+
+        _canvas.ontouchend = function (e) {
+            _step = 1
+            let _step_url = _canvas.toDataURL("image/png")
+            if (_storage.length < 10) {
+                _storage.unshift(_step_url)
+            } else {
+                _storage.pop()
+                _storage.unshift(_step_url)
+            }
+            console.log(_storage)
+        }
     } else {
         _canvas.onmousedown = function (e) { // 鼠标点击
             if (_fillall) {
@@ -127,8 +143,10 @@ if (_canvas.getContext) {
                 }
             }
         }
-        _canvas.onmouseleave = function (e) { // 鼠标抬起
+        _canvas.onmouseleave = function (e) { // 当鼠标离开canvas标签的范围时把_moving置为false
             _moving = false
+            _step = 1
+
         }
         _canvas.onmousemove = function (e) { // 鼠标移动
             let newPointX = e.layerX
@@ -140,15 +158,23 @@ if (_canvas.getContext) {
                 _point = _newPoint
             }
         }
-        _canvas.onmouseup = function (e) { // 当鼠标离开canvas标签的范围时把_moving置为false
+        _canvas.onmouseup = function (e) {  // 鼠标抬起
             _moving = false
+            _step = 1
+            let _step_url = _canvas.toDataURL("image/png")
+            if (_storage.length < 10) {
+                _storage.unshift(_step_url)
+            } else {
+                _storage.pop()
+                _storage.unshift(_step_url)
+            }
+            console.log(_storage)
         }
     }
 
     _clear.onclick = function (e) { // 清除画板上的所有内容，用一个新的白色背景覆盖画板
         ctx.fillStyle = '#fefefe'
         ctx.fillRect(0, 0, _canvas.width, _canvas.height);
-        console.log(e)
     }
 
     _load.onclick = function (e) { // 下载画板内容为图片
@@ -160,6 +186,36 @@ if (_canvas.getContext) {
         a.target = '_blank'
         a.click()
     }
+
+    _back.onclick = function (e) {
+        if (_step >= _storage.length) {
+            return
+        } else {
+            drawImage(_step)
+            _step++
+        }
+
+    }
+
+    _next.onclick = function (e) {
+        if (_step === 1) {
+            return
+        } else {
+            drawImage(_step - 2)
+            _step--
+        }
+    }
+
+    function drawImage(step) {
+        ctx.clearRect(0, 0, _canvas.width, _canvas.height)
+        let _image = new Image()
+        _image.src = _storage[step]
+        _image.onload = function (e) {
+            ctx.drawImage(_image, 0, 0)
+        }
+    }
+
+
 
     function drawLine(x1, y1, x2, y2) { // canvas画线的方法
         ctx.beginPath();
